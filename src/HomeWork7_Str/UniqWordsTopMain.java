@@ -15,21 +15,17 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map.Entry;
 
-import java.util.Map;
-import java.util.HashMap;
-
 
 public class UniqWordsTopMain {
     public static void main(String[] args){
         String filePath = "d:/Java/WarAndPeace.txt";
         String book = readAllBytesJava7(filePath);
 
-        //char[] chars = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя-".toCharArray(); // символы, которые могут быть в слове
         //String book = "Миру мир.. Мирный,     мир! Мир? Да, мир, и еще раз мир. Война - не мир.  и раз и два ! -ff dfdf f-";
-        //String book = "Миру мир. lfjsls sldjfjjfsl  csdslsdf  sжопа!";
 
         //System.out.println("Исходная строка:");
         //System.out.println(book);
+
         book = book.toLowerCase(); // все слова приведём в нижний регистр
         // далее все ненужные символы заменим пробелами
         book = book.replaceAll("\\.+"," ");
@@ -52,8 +48,6 @@ public class UniqWordsTopMain {
         // создадим массив из слов
         //System.out.println("Нормализованная строка:");
         //System.out.println(book);
-
-
 
         String[] allWords;
         String delimeter = " "; // Разделитель
@@ -98,8 +92,8 @@ public class UniqWordsTopMain {
             System.out.println("Key: " + entry.getKey() + "   Value: "
                     + entry.getValue());
         }
-*/      
-        
+*/
+
         int value = 0;
         for(int i = 0; i < allWords.length; i++) {
             // Заполним список Мар значениеми (посчитаем количество каждого слова)
@@ -116,25 +110,22 @@ public class UniqWordsTopMain {
 */
         // Выполним сортировку списка по значаениям
         List list = new ArrayList(countWords.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+        Collections.sort(list, new Comparator<Entry<String, Integer>>() {
         
             @Override
-        public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+        public int compare(Entry<String, Integer> a, Entry<String, Integer> b) {
             return b.getValue() - a.getValue();
         }
         });
         
         System.out.println();
-        System.out.println("ТОП 10 слов: ");
+        System.out.println("ТОП 10 слов из романа \"Война и мир\": ");
 
         for(int i = 0; i< 10; i++) {
             System.out.println(list.get(i));
         }
-        
-        
     }
-    
-    
+
         private static String readAllBytesJava7(String filePath) {
         String content = "";
         try {
