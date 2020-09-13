@@ -1,7 +1,5 @@
 package HomeWork5;
 
-import java.lang.Math;
-
 public class CalculatorWithMathExtends extends CalculatorWithOperator{
 
 

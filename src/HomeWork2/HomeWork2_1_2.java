@@ -14,7 +14,7 @@ public class HomeWork2_1_2 {
         int x = 1; 
         int i; 
         
-        for (i = 1; i <= a; i++){ // посчитаем ответ
+        for (i = 1; i <= a; i++){ // посчитаем результат
             x = x * i;
         }
         

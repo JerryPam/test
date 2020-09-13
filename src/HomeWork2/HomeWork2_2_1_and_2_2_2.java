@@ -7,7 +7,7 @@ package HomeWork2;
 
 import java.util.Scanner;
 
-public class HomeWork2_2_1 {
+public class HomeWork2_2_1_and_2_2_2 {
     public static void main(String[] args) {
         Scanner scan1 = new Scanner(System.in);
         System.out.print("Введите количество элементов массива: ");

@@ -10,7 +10,6 @@ public class EasySearchMain {
         String test_book = readAllBytesJava7(filePath);
         EasySearch es = new EasySearch();
         //String test_book = "Миру мир. Мирный, мир! Мир? Да, мир, и еще раз мир. Война - не мир.";
-        //String test_book = "Миру мир. lfjsls sldjfjjfsl  csdslsdf  sжопа!";
         int count;
 
         count = es.search(test_book, "война");

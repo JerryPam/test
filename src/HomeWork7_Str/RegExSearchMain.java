@@ -10,7 +10,6 @@ public class RegExSearchMain {
         String book = readAllBytesJava7(filePath);
         RegExSearch regex = new RegExSearch();
         //String book = "Миру мир. Мирный, мир! Мир? Да, мир, и еще раз мир. Война - не мир.";
-        //String book = "Миру мир. lfjsls sldjfjjfsl  csdslsdf  sжопа!";
         int c;
         
         System.out.println("Посчитаем количество слов \"война\", \"мир\" и союза \"и\" в романе \"Война и мир\" при помощи класса \"RegExSearch\":");

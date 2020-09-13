@@ -1,5 +1,6 @@
 /*
 Ханойские башни. Ручной режим.
+Работающая версия
 */
 
 package HomeWork4;
@@ -9,7 +10,6 @@ import java.util.Scanner;
 
 public class HanoiTower {
     public static void main(String[] args) {
-        //char[][] mas;
         boolean win  = false; // признак окончания игры
         boolean move = false; // признак успешности перемещения кольца
         
@@ -33,6 +33,10 @@ public class HanoiTower {
 
         printMap(map);
 
+        int step_count = 0; // переменная, для подсчёта шагов работы программы или попыток переместить кольца
+        // при нулевом шаге (первом) запомним столбец с кольцами, для корректной проверки на победу
+        int column_with_rings = 0; // для запоминания столбца с кольцами
+
         do{
             cls();
             printMap(map);
@@ -40,6 +44,10 @@ public class HanoiTower {
             System.out.print("Откуда берём кольцо? ");
             int st_get = scanner.nextInt();
             st_get--; // первая колонка на экране - это нулевая колонка в java
+
+            if (step_count == 0)
+                column_with_rings = st_get; // запомним столбец, на котором первоначально находятся кольца
+            step_count++;
             
             System.out.print("Куда вешаем кольцо? ");
             int st_to = scanner.nextInt();
@@ -47,15 +55,17 @@ public class HanoiTower {
             
             ring = take_ring(st_get, map); // возьмём кольцо с указанного стержня
             if (ring == 0) { // если метод вернул ноль, значит колец на стержне нет
-                System.out.println("На " + (st_get+1) + "стержне колец нет");
+                System.out.println("На " + (st_get+1) + "-м стержне колец нет");
                 System.out.println("Введите правильный номер стержня, откуда брать кольцо");
+                System.out.print("Нажмите любую клавишу для продолжения . . . ");
+                s.nextLine();
             } else{ // если мы нашли и взяли кольцо - попробуем его повесить на выбранный стержень
                 // (int ring, int st1, int st2, int[][] map2)
                 move = hang_ring(ring, st_get, st_to, map);
                 if (move == true){ // если кольцо успешно перенесено
-                    win = proverka(st_get, map);
+                    win = proverka(column_with_rings, map); // проверим, не нужно ли нам заканчивать программу
                 } else {
-                    System.out.println("Перемещение кольца с " + (st_get+1) + "на " + (st_to+1) + "стержень невозможно");
+                    System.out.println("Перемещение кольца с " + (st_get+1) + " на " + (st_to+1) + " стержень невозможно");
                     System.out.print("Нажмите любую клавишу для продолжения . . . ");
                     s.nextLine();
                 }
@@ -65,6 +75,7 @@ public class HanoiTower {
         cls();
         printMap(map);
         System.out.println("ИГРА ЗАВЕРШЕНА!");
+        System.out.println("Количество ходов или попыток хода: " + step_count);
 
     } // *** ОКОНЧАНИЕ ОСНОВНОГО ТЕЛА ПРОГРАММЫ
 
@@ -145,17 +156,6 @@ public class HanoiTower {
         }while (i < map2.length);
     }
 
-
-/*
-    static char pull(int ring1){ // метод взятия кольца с указанного стержня
-
-    }
-
-    static char push(int ring2){ // поместить кольцо на указанный стержень
-
-    }
-*/
-
     static boolean proverka(int st1, int[][] map){ // проверка на заполненность третьего стержня, т.е. на окончание игры
         // если хотя-бы один из стержней приёмников заполнен - возвращаем true
         // st1- номер стержня-источника
@@ -183,24 +183,21 @@ public class HanoiTower {
         return theEnd;
     }
 
-/*
-    static boolean proverka(int[][] map){ // проверка на заполненность третьего стержня, т.е. на окончание игры
-        boolean theEnd = false; // признак окончания игры
-        for (int i = 0; i < map.length; i++){
-            if (!(map[i][2] == i + 1)){ 
-                theEnd = false;
-                return theEnd;
-            } else theEnd = true;
-        }
-        return theEnd;
-    }
-*/
-
     static void cls() { // метод для очистки экрана
         for (int i=0; i < 20; i++){
             System.out.println();
         }
     }
+
+/*
+    static char pull(int ring1){ // метод взятия кольца с указанного стержня
+
+    }
+
+    static char push(int ring2){ // поместить кольцо на указанный стержень
+
+    }
+*/
 
 /*
     static void Read()

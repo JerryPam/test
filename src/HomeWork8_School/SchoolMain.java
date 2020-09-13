@@ -21,7 +21,7 @@ public class SchoolMain {
 
         //заполним списочный массив объектов типа Предмет (СОЗДАДИМ ПРЕДМЕТЫ)
         for (int i = 0; i < subList.size(); i++) {
-            subList.add(0,new Subject(subNameList.get(i)));
+            subList.add(i, new Subject(subNameList.get(i)));
         }
 
         int countTeachers = 10; // количество учителей

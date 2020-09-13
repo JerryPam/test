@@ -3,8 +3,6 @@
 
 package HomeWork5;
 
-import java.lang.Math;
-
 public class CalculatorWithMathCopy{
 
     public double sum(double a, double b){
