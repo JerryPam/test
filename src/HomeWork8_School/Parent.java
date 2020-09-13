@@ -1,49 +1,24 @@
 package HomeWork8_School;
 
 public class Parent { // РОДИТЕЛЬ
-    private String fam;
-    private String name;
-    private String ot; // отчество
-    private String fio = fam + name + ot; // фио вместе
-    private char sex;  //пол m w
+    public String fam;
+    public String name;
+    public String ot; // отчество
+    public String fio; // фио вместе
+    public int sex;  //пол: 0 - мужской, 1 - женский
 
-    public void setFam(String fam) {
-        this.fam = fam;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setOt(String ot) {
-        this.ot = ot;
-    }
-
-    public boolean setSex(char sex) { // пол может быть либо мужской, либо женский
-        if (sex == 'm') {
-            this.sex = sex;
-            return true;
+    public Parent(int sex) { // в зависимости от пола родителя, создаём либо папу с мужскими именами, либо маму с женскими
+        if (sex == 0) { // мужчина
+            this.sex = 0;
+            this.fam = RandomS.famMan();
+            this.name = RandomS.nameMan();
+            this.ot = RandomS.otMan();
+        } else { // женщина
+            this.sex = 1;
+            this.fam = RandomS.famWomen();
+            this.name = RandomS.nameWomen();
+            this.ot = RandomS.otWomen();
         }
-        else if (sex == 'w') {
-            this.sex = sex;
-            return true;
-        }
-        else return false;
-    }
-
-    public String getFam() {
-        return fam;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getOt() {
-        return ot;
-    }
-
-    public char getSex() {
-        return sex;
+        this.fio = fam + name + ot;
     }
 }

@@ -1,19 +1,15 @@
 package HomeWork8_School;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Klass { // КЛАСС
-    public int num_class;  // номер класса
-    public char bukva_class;  // буква класса
+    String nameKlass;
     Teacher classTeacher; // классный руководитель
     ArrayList<Pupil> pupils = new ArrayList<>(); // ученики
-    LinkedList<Subject> subjects = new LinkedList<>(); // предметы
+    ArrayList<Subject> subjects = new ArrayList<>(); // предметы
 
-
-
-
-
-
-
+    public Klass(String nameKlass, Teacher classTeacher) {
+        this.nameKlass = nameKlass;
+        this.classTeacher = classTeacher;
+    }
 }

@@ -146,9 +146,17 @@ public class RandomS {
     }
 
     public static int countChildrenInFamily(){ // количество детей в семье
-        return random.nextInt(4); // до трёх детей
+        return random.nextInt(3) +1; // от одного до трёх детей
     }
 
+    public static int iqLevel(){ // случайный уровень IQ. Максимальный примем до 110
+      return random.nextInt(111);
+    }
+
+    public static int sutDohod(){ // суточный доход ученика
+        return random.nextInt(5) + 2;
+        // примем что стоимость в пределах от 2 до 6
+    }
 
 
 }

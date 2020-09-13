@@ -8,7 +8,7 @@ public class Teacher { // ПРЕПОДАВАТЕЛЬ
     public String name;
     public String ot;
     public String fio; // фио вместе
-    //private int sex; // пол: 0 - мужчина, 1 - женщина. Параметр
+    public int sex; // пол: 0 - мужчина, 1 - женщина. Параметр
 
     ArrayList<String> subs = new ArrayList<>(); // список предметов
 
@@ -38,26 +38,29 @@ public class Teacher { // ПРЕПОДАВАТЕЛЬ
            this.potential = potential;
     }
 
-    public Teacher() {
+    public Teacher(String subject0, String subject1) {
         // в зависимости от пола (который определим случайно), дадим Преподавателю мужские, либо женские фио
         if (RandomS.nulAndOne() == 0) { // мужчина
+            this.sex = 0;
             this.fam = RandomS.famMan();
             this.name = RandomS.nameMan();
             this.ot = RandomS.otMan();
         } else { // женщина
+            this.sex = 1;
             this.fam = RandomS.famWomen();
             this.name = RandomS.nameWomen();
             this.ot = RandomS.otWomen();
         }
 
         this.fio = this.fam + this.name + this.ot; // фио вместе
-        this.subs = subs;  // пока не доделано, будет ссылка на ArrayList предметов
-        // случайным образом буду определять количество предметов (планирую не более трёх)
-        // и далее случайным образом определю что за предметы будут у данного Преподавателя
-        setCat(RandomS.cathegory());
-        setBall(RandomS.attestatBallTeacher());
+
+        this.subs.add(0, subject0); // первый предмет
+        this.subs.add(1, subject1); // второй предмет
+
+        setCat(RandomS.cathegory()); // категория
+        setBall(RandomS.attestatBallTeacher());  // ср балл аттестата
         this.koef_of_teach = RandomS.koefOfTeach();
-        setPotential(RandomS.nulAndOne());
+        setPotential(RandomS.nulAndOne()); // скрытй потенциял
         this.price = RandomS.teacherPrice();
     }
 
