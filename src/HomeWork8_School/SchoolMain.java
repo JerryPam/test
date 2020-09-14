@@ -20,7 +20,7 @@ public class SchoolMain {
         ArrayList<Subject> subList = new ArrayList<>(); // списочный массив типа Предмет
 
         //заполним списочный массив объектов типа Предмет (СОЗДАДИМ ПРЕДМЕТЫ)
-        for (int i = 0; i < subList.size(); i++) {
+        for (int i = 0; i < subNameList.size(); i++) {
             subList.add(i, new Subject(subNameList.get(i)));
         }
 
@@ -51,8 +51,7 @@ public class SchoolMain {
                 break;
         }
 
-        System.out.println("Вы выбрали уровень " + gameLevel);
-        System.out.println("Будет создано " + countTeachers + " учителей");
+        System.out.println("Вы выбрали уровень " + gameLevel + ". У Вас будет выбор из "+ countTeachers + " преподавателей");
 
         ArrayList<Teacher> teacherArrayList = new ArrayList<>(); // список учителей
 
@@ -66,17 +65,61 @@ public class SchoolMain {
                 teacherArrayList.add(i, new Teacher(subNameList.get(RandomS.random.nextInt(subNameList.size())), subNameList.get(RandomS.random.nextInt(subNameList.size()))));
             }
         }
-        System.out.println("Создано " + teacherArrayList.size() + " учителей:");
+        System.out.println();
+        //System.out.println("Создано " + teacherArrayList.size() + " учителей:");
+        System.out.println("Вот они:");
 
         for (int i = 0; i < countTeachers; i++) {
+            System.out.print(i + ") ");
             System.out.print(teacherArrayList.get(i).fam + " ");
             System.out.print(teacherArrayList.get(i).name + " ");
-            System.out.print(teacherArrayList.get(i).ot + " ");
-            System.out.print("Ср. балл: " + teacherArrayList.get(i).ball + " Предметы: ");
+            System.out.print(teacherArrayList.get(i).ot + " - ");
+            System.out.print("Ср.балл: " + teacherArrayList.get(i).ball + ", ");
+            System.out.print("Ст-ть/сут: " + teacherArrayList.get(i).price + ", Предметы: ");
             System.out.print(teacherArrayList.get(i).subs.get(0) + " ");
             System.out.print(teacherArrayList.get(i).subs.get(1) + " ");
             System.out.println();
         }
+        System.out.println();
+
+        // выведем для наглядности список предметов, которые преподаются в школе
+        System.out.println("Предметы, которые преподаются в школе:");
+        for (int i = 0; i < subList.size(); i++) {
+            System.out.print(subList.get(i).name);
+            if (i != subList.size() - 1) System.out.print(", ");
+        }
+        System.out.println();
+        System.out.println("Для каждого из этих предметов необходимо выбрать преподавателя, который будет вести этот предмет");
+        System.out.println();
+        System.out.println("ВЫБОР - (введите порядковый номер преподавателя из списка сверху, который будет вести предмет): ");
+
+        int numTeacher;  // номер преподавателя из списка
+        int priznakVybora; // признак выбора преподавателя для предмета
+        for (int i = 0; i < subList.size(); i++) {
+            priznakVybora = 0;
+            do {
+                System.out.print(subList.get(i).name + ": №? ");
+                numTeacher = scanner.nextInt();
+                if (numTeacher < 0 & numTeacher > teacherArrayList.size()) {
+                    System.out.println("Введён некорректный номер. Выберите номер из диапазона списка");
+                }
+                else if (subList.get(i).name != teacherArrayList.get(numTeacher).subs.get(0) & subList.get(i).name != teacherArrayList.get(numTeacher).subs.get(1)) {
+                    System.out.println("Выбранный преподаватель не может преподавать предмет " + subList.get(i).name + "!");
+                    System.out.println("Выберите другого преподавателя для этого предмета");
+                } else {
+                    subList.get(i).teacher = teacherArrayList.get(numTeacher);
+                    priznakVybora = 1;
+                }
+            } while (priznakVybora == 0);
+        }
+
+        System.out.println();
+        System.out.println("Вы выбрали преподавателей! Вот список предметов и кто их будет вести: ");
+
+        for (int i = 0; i < subList.size(); i++) { // выводим список предметов и преподавателей, которые их будут вести
+            System.out.println(subList.get(i).name + "   ведёт   " + subList.get(i).teacher.fam + " " + subList.get(i).teacher.name + " " + subList.get(i).teacher.ot);
+        }
+        System.out.println();
 
         ArrayList<Family> familyArrayList = new ArrayList<>(); // список семей
         //ArrayList<Parent> parentArrayList = new ArrayList<>(); // список родителей - не нужен, т.к. родители привязаны к семьям
@@ -110,6 +153,7 @@ public class SchoolMain {
         childrenCreated += childrenInStep; // учёт, сколько учеников создано
     }
         System.out.println("Создано " + pupilArrayList.size() + " учеников");
+        System.out.println();
 
     // Создадим КЛАССЫ, сразу с классными руководителями
         klassArrayList.add(new Klass("10А", teacherArrayList.get(0)));
