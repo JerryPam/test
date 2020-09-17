@@ -67,6 +67,8 @@ public class SchoolMain {
         }
         System.out.println();
         //System.out.println("Создано " + teacherArrayList.size() + " учителей:");
+        int lengthFIO; // длина ФИО, учитывается для выравнивания выводимого списка
+
         System.out.println("Вот они:");
 
         for (int i = 0; i < countTeachers; i++) {
@@ -74,6 +76,10 @@ public class SchoolMain {
             System.out.print(teacherArrayList.get(i).fam + " ");
             System.out.print(teacherArrayList.get(i).name + " ");
             System.out.print(teacherArrayList.get(i).ot + " - ");
+
+            lengthFIO = teacherArrayList.get(i).fam.length() + teacherArrayList.get(i).name.length() + teacherArrayList.get(i).ot.length();
+            System.out.print(addSpaces(30 - lengthFIO)); // добавим несколько пробелов после фио для выравнивания столбцов
+
             System.out.print("Ср.балл: " + teacherArrayList.get(i).ball + ", ");
             System.out.print("Ст-ть/сут: " + teacherArrayList.get(i).price + ", Предметы: ");
             System.out.print(teacherArrayList.get(i).subs.get(0) + " ");
@@ -117,7 +123,8 @@ public class SchoolMain {
         System.out.println("Вы выбрали преподавателей! Вот список предметов и кто их будет вести: ");
 
         for (int i = 0; i < subList.size(); i++) { // выводим список предметов и преподавателей, которые их будут вести
-            System.out.println(subList.get(i).name + "   ведёт   " + subList.get(i).teacher.fam + " " + subList.get(i).teacher.name + " " + subList.get(i).teacher.ot);
+            lengthFIO = subList.get(i).name.length(); // посчитаем длину строки наименования предмета
+            System.out.println(subList.get(i).name + " ведёт " + addSpaces(10 - lengthFIO) + subList.get(i).teacher.fam + " " + subList.get(i).teacher.name + " " + subList.get(i).teacher.ot);
         }
         System.out.println();
 
@@ -168,27 +175,136 @@ public class SchoolMain {
             System.out.println();
         }
 
-        System.out.println("...");
+        //**********************************************
+        // посортируем учеников
+        System.out.println();
+        System.out.println("Ученики школы (несортированные):");
 
+        for (int i = 0; i < countPupils; i++) {
+            System.out.print(i + ") ");
+            System.out.print(pupilArrayList.get(i).fam + " ");
+            System.out.print(pupilArrayList.get(i).name + " ");
+            System.out.print(pupilArrayList.get(i).ot + " - ");
+            lengthFIO = pupilArrayList.get(i).fam.length() + pupilArrayList.get(i).name.length() + pupilArrayList.get(i).ot.length();
+            System.out.print(addSpaces(30 - lengthFIO)); // добавим несколько пробелов после фио для выравнивания столбцов
+            System.out.print("Поведение: " + pupilArrayList.get(i).povedenie + ", ");
+            System.out.print("Усп-ть: " + pupilArrayList.get(i).uspevaimost + ", ");
+            System.out.print("IQ: " + pupilArrayList.get(i).iq + ", ");
+            System.out.print("Доход/сут: " + pupilArrayList.get(i).sutDohod);
+            System.out.println();
+        }
+        System.out.println();
 
+        System.out.println("ФОРМИРУЕМ КЛАССЫ (наполняем их учениками)");
+        System.out.println("Пожалуйста, выберите, каким образом распределить учеников по классам!");
+        System.out.println("Критерий выбора: 0, 1, 2, 3 или 4 - где:");
+        System.out.println("0 - случайным образом;");
+        System.out.println("1 - по среднему баллу по поведению;");
+        System.out.println("2 - по среднему баллу по успеваемости;");
+        System.out.println("3 - по базовому IQ;");
+        System.out.println("4 - по сумме дохода в сутки.");
 
+        ArrayList<Pupil> pupilArrayListForSort = new ArrayList<>(pupilArrayList); // заведём отдельный список учеников для различных сортировок
+
+        int kritSortOfPupil = 0; // критерий сортировки учеников
+        do {
+            System.out.println("Введите 0, 1, 2, 3 или 4:");
+            kritSortOfPupil = scanner.nextInt();
+        } while (kritSortOfPupil != 1 & kritSortOfPupil != 2 & kritSortOfPupil != 3 & kritSortOfPupil != 4 & kritSortOfPupil != 0);
+
+        System.out.println("Вы выбрали критерий \"" + kritSortOfPupil + "\"!");
+        System.out.print("Ученики будут распределены по классам ");
+        switch (kritSortOfPupil) {
+            case (1):
+                System.out.print("по среднему баллу по поведению");
+                PupilBehaviorComparator pupilBehaviorComparator = new PupilBehaviorComparator();
+                pupilArrayListForSort.sort(pupilBehaviorComparator);
+                break;
+            case (2):
+                System.out.print("по среднему баллу по успеваемости");
+                PupilScoreComparator pupilScoreComparator = new PupilScoreComparator();
+                pupilArrayListForSort.sort(pupilScoreComparator);
+                break;
+            case (3):
+                System.out.print("по базовому IQ");
+                PupilBaseIqComparator pupilBaseIqComparator = new PupilBaseIqComparator();
+                pupilArrayListForSort.sort(pupilBaseIqComparator);
+                break;
+            case (4):
+                System.out.print("по сумме дохода в сутки");
+                PupilIncomeComparator pupilIncomeComparator = new PupilIncomeComparator();
+                pupilArrayListForSort.sort(pupilIncomeComparator);
+                break;
+            default:
+                System.out.print("случайным образом (согласно начально сформированного списка учеников)");
+                // default - для случайного заполнения классов ничего делать не надо
+                // т.к. у нас уже есть исходный список, случайно созданных учеников
+                break;
+        }
+        System.out.println();
+        System.out.println();
+
+        int countPupilsInKlass = 25; // количество учеников в классе примем 25
+        int nextPupil = 0;  // следующий ученик из списка учеников
+        for (int nextKlass = 0; nextKlass < klassArrayList.size(); nextKlass++) {
+            for (int j = 0; j < countPupilsInKlass; j++) {
+                klassArrayList.get(nextKlass).pupils.add(pupilArrayListForSort.get(nextPupil));
+                nextPupil +=1;
+            }
+        }
+        System.out.println("КЛАССЫ СФОРМИРОВАНЫ!");
+
+        nextPupil = 0;
+        int numPP; // номер по порядку в списке учеников
+        //int lengthFIO; // длина ФИО, учитывается для выравнивания выводимого списка
+        //int addSpaces;
+        for (int nextKlass = 0; nextKlass < klassArrayList.size(); nextKlass++) { // цикл для классов
+            System.out.println("КЛАСС \"" + klassArrayList.get(nextKlass).nameKlass + "\"");
+            System.out.println("Классный руководитель: " + klassArrayList.get(nextKlass).classTeacher.fam + " " + klassArrayList.get(nextKlass).classTeacher.name + " " + klassArrayList.get(nextKlass).classTeacher.ot);
+            System.out.println("Список учеников класса: ");
+            for (int j = 0; j < countPupilsInKlass; j++) { // цикл для вывода списка учеников в конкретном классе
+                numPP = j + 1; // чтобы список учеников класса начанался в человеческом виде, т.е. с "1", а не с нуля
+                System.out.print(numPP + ") ");
+                System.out.print(klassArrayList.get(nextKlass).pupils.get(j).fam + " ");
+                System.out.print(klassArrayList.get(nextKlass).pupils.get(j).name + " ");
+                System.out.print(klassArrayList.get(nextKlass).pupils.get(j).ot + " ");
+                lengthFIO = klassArrayList.get(nextKlass).pupils.get(j).fam.length() + klassArrayList.get(nextKlass).pupils.get(j).name.length() + klassArrayList.get(nextKlass).pupils.get(j).ot.length();
+                System.out.print(addSpaces(31 - lengthFIO));
+                System.out.print("Поведение: " + klassArrayList.get(nextKlass).pupils.get(j).povedenie + ", ");
+                System.out.print("Усп-ть: " + klassArrayList.get(nextKlass).pupils.get(j).uspevaimost + ", ");
+                System.out.print("IQ: " + klassArrayList.get(nextKlass).pupils.get(j).iq + ", ");
+                System.out.print("Доход/сут: " + klassArrayList.get(nextKlass).pupils.get(j).sutDohod);
+                System.out.println();
+                nextPupil +=1;
+            }
+            System.out.println(); // отделим классы пустой строкой
+        }
+
+/*      // test
+        System.out.println("Сортированынй список учеников:");
+        for (int i = 0; i < countPupils; i++) {
+            System.out.print(i + ") ");
+            System.out.print(pupilArrayListForSort.get(i).fam + " ");
+            System.out.print(pupilArrayListForSort.get(i).name + " ");
+            System.out.print(pupilArrayListForSort.get(i).ot + " - ");
+            System.out.print("Поведение: " + pupilArrayListForSort.get(i).povedenie + ", ");
+            System.out.print("Усп-ть: " + pupilArrayListForSort.get(i).uspevaimost + ", ");
+            System.out.print("IQ: " + pupilArrayListForSort.get(i).iq + ", ");
+            System.out.print("Доход/сут: " + pupilArrayListForSort.get(i).sutDohod);
+            System.out.println();
+        }
+*/
+        System.out.println("To be continued...");
 
     } // закрывает psvm
+
+    public static String addSpaces(int spaces) { // возврат строки с нужным количеством пробелов
+        StringBuilder builder = new StringBuilder();
+        for (int a = 0; a < spaces; a++) {
+            builder.append(' ');
+        }
+        return builder.toString();
+    }
+
 }  // SchoolMain
 
-
-
-
-/*
-    MATH,
-    RUS,
-    ENG,
-    LITERATURE,
-    GEOGRAPHY,
-    BIOLOGY,
-    ASTRONOMY,
-    CHEMISTRY,
-    DRAWING, // черчение
-    TRAINING  // физкультура
-
- */
