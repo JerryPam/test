@@ -235,11 +235,8 @@ public class SchoolMain {
                 PupilIncomeComparator pupilIncomeComparator = new PupilIncomeComparator();
                 pupilArrayListForSort.sort(pupilIncomeComparator);
                 break;
-            default:
+            default:  // default (0) - можно было сделать case(0), но сделал default. Даже не знаю, что лучше. Работает и так и так.
                 System.out.print("случайным образом");
-                // default (0) - для случайного заполнения классов пока ничего не делаем
-                // т.к. у нас уже есть исходный список, случайно созданных учеников, его и вносим подряд в классы
-                // или позже можно и реализовать случайный выбор из этого общего списка и уже есть мысли как это сделать
 
                 // ПЕРЕМЕШАЕМ список с учениками:
                 int mixtPower = 1000; // сила перемешивания
