@@ -236,10 +236,26 @@ public class SchoolMain {
                 pupilArrayListForSort.sort(pupilIncomeComparator);
                 break;
             default:
-                System.out.print("случайным образом (согласно начально сформированного списка учеников)");
+                System.out.print("случайным образом");
                 // default (0) - для случайного заполнения классов пока ничего не делаем
                 // т.к. у нас уже есть исходный список, случайно созданных учеников, его и вносим подряд в классы
                 // или позже можно и реализовать случайный выбор из этого общего списка и уже есть мысли как это сделать
+
+                // ПЕРЕМЕШАЕМ список с учениками:
+                int mixtPower = 1000; // сила перемешивания
+                int index1, index2; // индексы элементов списка, которые будут меняться местами за итерацию цикла
+                Pupil tempPupil;
+                int limitRandom = pupilArrayListForSort.size(); // ограничение генератора случайных чисел
+                for (int i = 0; i < mixtPower; i++) {
+                    index1 = RandomS.randomInt(limitRandom);
+                    do {
+                        index2 = RandomS.randomInt(limitRandom);
+                    } while (index1 == index2); // чтобы гарантировать, что элементы списка для замены будут разными
+
+                    tempPupil = pupilArrayListForSort.get(index1);
+                    pupilArrayListForSort.set(index1, pupilArrayListForSort.get(index2));
+                    pupilArrayListForSort.set(index2, tempPupil);
+                }
                 break;
         }
         System.out.println();
@@ -269,8 +285,10 @@ public class SchoolMain {
                 System.out.print(klassArrayList.get(nextKlass).pupils.get(j).fam + " ");
                 System.out.print(klassArrayList.get(nextKlass).pupils.get(j).name + " ");
                 System.out.print(klassArrayList.get(nextKlass).pupils.get(j).ot + " ");
+
                 lengthFIO = klassArrayList.get(nextKlass).pupils.get(j).fam.length() + klassArrayList.get(nextKlass).pupils.get(j).name.length() + klassArrayList.get(nextKlass).pupils.get(j).ot.length();
                 System.out.print(addSpaces(31 - lengthFIO)); // добавим пробелы до 31 символа от начала, чтобы выровнять столбцы с данными
+
                 System.out.print("Поведение: " + klassArrayList.get(nextKlass).pupils.get(j).povedenie + ", ");
                 System.out.print("Усп-ть: " + klassArrayList.get(nextKlass).pupils.get(j).uspevaimost + ", ");
                 System.out.print("IQ: " + klassArrayList.get(nextKlass).pupils.get(j).iq + ", ");

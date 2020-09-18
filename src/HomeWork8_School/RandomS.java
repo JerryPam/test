@@ -12,7 +12,7 @@ import java.util.Random;
 public class RandomS {
 
     static Random random = new Random();
-    
+
   public static String famMan(){ // возвращаем случайную мужскую фамилию
       String[] arrFamMan = new String[] {
       "Чекушкин", "Баранов", "Стульпа", "Кузнецов", "Вилкин", "Ложкин",
@@ -156,6 +156,10 @@ public class RandomS {
     public static int sutDohod(){ // суточный доход ученика
         return random.nextInt(5) + 2;
         // примем что стоимость в пределах от 2 до 6
+    }
+
+    public static int randomInt(int num) { // обычный рандом с передачей параметра
+      return random.nextInt(num);
     }
 
 
