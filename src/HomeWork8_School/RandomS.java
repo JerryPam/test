@@ -158,10 +158,11 @@ public class RandomS {
         // примем что стоимость в пределах от 2 до 6
     }
 
+    /*
     public static int randomInt(int num) { // обычный рандом с передачей параметра
       return random.nextInt(num);
     }
-
+*/
 
 }
 

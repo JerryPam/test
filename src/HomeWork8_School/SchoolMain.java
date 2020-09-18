@@ -55,14 +55,23 @@ public class SchoolMain {
 
         ArrayList<Teacher> teacherArrayList = new ArrayList<>(); // список учителей
 
+        int sub1, sub2; // индексы на элементы списка subNameList. Для удобства оперирования при обеспечении
+
         for (int i = 0; i < countTeachers; i++) { // СОЗДАДИМ УЧИТЕЛЕЙ
             if (i < subNameList.size()) {
                 // пока предметов меньше, чем созданных учителей - первый предмет у учителя создадим гарантированно, второй уже случайно
                 // чтобы гарантированно были учителя для каждого предмета
-                teacherArrayList.add(i, new Teacher(subNameList.get(i), subNameList.get(RandomS.random.nextInt(subNameList.size()))));
+                do {
+                    sub2 = RandomS.random.nextInt(subNameList.size());
+                } while (i == sub2); // обеспечиваем, чтоб у Преподавателя не было двух одинаковых предметов
+                teacherArrayList.add(i, new Teacher(subNameList.get(i), subNameList.get(sub2))); // создание Преподавателя с двумя разными предметами
             } else {
                 // если учителей уже больше, чем созданных предметов - дальше и первый и второй предмет у учителя создаём случайным образом
-                teacherArrayList.add(i, new Teacher(subNameList.get(RandomS.random.nextInt(subNameList.size())), subNameList.get(RandomS.random.nextInt(subNameList.size()))));
+                sub1 = RandomS.random.nextInt(subNameList.size());
+                do {
+                    sub2 = RandomS.random.nextInt(subNameList.size());
+                } while (sub1 == sub2); // обеспечиваем, чтоб у Преподавателя не было двух одинаковых предметов
+                teacherArrayList.add(i, new Teacher(subNameList.get(sub1), subNameList.get(sub2)));
             }
         }
         System.out.println();
@@ -244,9 +253,9 @@ public class SchoolMain {
                 Pupil tempPupil;
                 int limitRandom = pupilArrayListForSort.size(); // ограничение генератора случайных чисел
                 for (int i = 0; i < mixtPower; i++) {
-                    index1 = RandomS.randomInt(limitRandom);
+                    index1 = RandomS.random.nextInt(limitRandom);
                     do {
-                        index2 = RandomS.randomInt(limitRandom);
+                        index2 = RandomS.random.nextInt(limitRandom);
                     } while (index1 == index2); // чтобы гарантировать, что элементы списка для замены будут разными
 
                     tempPupil = pupilArrayListForSort.get(index1);
