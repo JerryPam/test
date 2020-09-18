@@ -237,9 +237,9 @@ public class SchoolMain {
                 break;
             default:
                 System.out.print("случайным образом (согласно начально сформированного списка учеников)");
-                // default - для случайного заполнения классов пока ничего не делаем
+                // default (0) - для случайного заполнения классов пока ничего не делаем
                 // т.к. у нас уже есть исходный список, случайно созданных учеников, его и вносим подряд в классы
-                // или позже можно и реализовать случайный выбор из этого общего списка
+                // или позже можно и реализовать случайный выбор из этого общего списка и уже есть мысли как это сделать
                 break;
         }
         System.out.println();
@@ -270,7 +270,7 @@ public class SchoolMain {
                 System.out.print(klassArrayList.get(nextKlass).pupils.get(j).name + " ");
                 System.out.print(klassArrayList.get(nextKlass).pupils.get(j).ot + " ");
                 lengthFIO = klassArrayList.get(nextKlass).pupils.get(j).fam.length() + klassArrayList.get(nextKlass).pupils.get(j).name.length() + klassArrayList.get(nextKlass).pupils.get(j).ot.length();
-                System.out.print(addSpaces(31 - lengthFIO));
+                System.out.print(addSpaces(31 - lengthFIO)); // добавим пробелы до 31 символа от начала, чтобы выровнять столбцы с данными
                 System.out.print("Поведение: " + klassArrayList.get(nextKlass).pupils.get(j).povedenie + ", ");
                 System.out.print("Усп-ть: " + klassArrayList.get(nextKlass).pupils.get(j).uspevaimost + ", ");
                 System.out.print("IQ: " + klassArrayList.get(nextKlass).pupils.get(j).iq + ", ");
