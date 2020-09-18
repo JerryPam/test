@@ -29,7 +29,7 @@ public class SchoolMain {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Игра ШКОЛА и Вы в ней ДИРЕКТОР!");
         System.out.println("Выберите сложность игры 1, 2 или 3, где:");
-        System.out.println("1 - легко (25 преподавателей) ");
+        System.out.println("1 - легко  (25 преподавателей) ");
         System.out.println("2 - средне (17 преподавателей) ");
         System.out.println("3 - сложно (10 преподавателей) ");
         int gameLevel = 0;
@@ -55,7 +55,7 @@ public class SchoolMain {
 
         ArrayList<Teacher> teacherArrayList = new ArrayList<>(); // список учителей
 
-        int sub1, sub2; // индексы на элементы списка subNameList. Для удобства оперирования при обеспечении
+        int sub1, sub2; // индексы на элементы списка subNameList. Используются для предотвращения создания двух одинаковых предметов в свойствах конкретного преподавателя
 
         for (int i = 0; i < countTeachers; i++) { // СОЗДАДИМ УЧИТЕЛЕЙ
             if (i < subNameList.size()) {
@@ -133,7 +133,7 @@ public class SchoolMain {
 
         for (int i = 0; i < subList.size(); i++) { // выводим список предметов и преподавателей, которые их будут вести
             lengthFIO = subList.get(i).name.length(); // посчитаем длину строки наименования предмета
-            System.out.println(subList.get(i).name + " ведёт " + addSpaces(10 - lengthFIO) + subList.get(i).teacher.fam + " " + subList.get(i).teacher.name + " " + subList.get(i).teacher.ot);
+            System.out.println(subList.get(i).name + addSpaces(11 - lengthFIO) + " ведёт " + subList.get(i).teacher.fam + " " + subList.get(i).teacher.name + " " + subList.get(i).teacher.ot);
         }
         System.out.println();
 
