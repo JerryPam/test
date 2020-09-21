@@ -37,7 +37,7 @@ public class SchoolMain {
         do {
             System.out.println("Введите 1, 2 или 3:");
             gameLevel = scanner.nextInt();
-        } while (gameLevel != 1 & gameLevel != 2 & gameLevel != 3 );
+        } while (gameLevel != 1 && gameLevel != 2 && gameLevel != 3 );
 
         switch (gameLevel) {
             case (1):
@@ -84,7 +84,7 @@ public class SchoolMain {
             System.out.print(i + ") ");
             System.out.print(teacherArrayList.get(i).fam + " ");
             System.out.print(teacherArrayList.get(i).name + " ");
-            System.out.print(teacherArrayList.get(i).ot + " - ");
+            System.out.print(teacherArrayList.get(i).ot + "   ");
 
             lengthFIO = teacherArrayList.get(i).fam.length() + teacherArrayList.get(i).name.length() + teacherArrayList.get(i).ot.length();
             System.out.print(addSpaces(30 - lengthFIO)); // добавим несколько пробелов после фио для выравнивания столбцов
@@ -115,7 +115,7 @@ public class SchoolMain {
             do {
                 System.out.print(subList.get(i).name + ": №? ");
                 numTeacher = scanner.nextInt();
-                if (numTeacher < 0 & numTeacher > teacherArrayList.size()) {
+                if (numTeacher < 0 && numTeacher > teacherArrayList.size()) {
                     System.out.println("Введён некорректный номер. Выберите номер из диапазона списка");
                 }
                 else if (subList.get(i).name != teacherArrayList.get(numTeacher).subs.get(0) & subList.get(i).name != teacherArrayList.get(numTeacher).subs.get(1)) {
@@ -171,6 +171,7 @@ public class SchoolMain {
         System.out.println("Создано " + pupilArrayList.size() + " учеников");
         System.out.println();
 
+
     // Создадим КЛАССЫ, сразу с классными руководителями
         klassArrayList.add(new Klass("10А", teacherArrayList.get(0)));
         klassArrayList.add(new Klass("10Б", teacherArrayList.get(1)));
@@ -184,6 +185,67 @@ public class SchoolMain {
             System.out.println();
         }
 
+        System.out.println();
+        int prChanging = 0; // признак изменения классного руководителя
+        do {
+            System.out.println("Вы хотите изменить классных руководителей или оставить как есть?");
+            System.out.println("0 - оставить как есть");
+            System.out.println("1 - изменить");
+            prChanging = scanner.nextInt();
+        } while (prChanging != 0 && prChanging != 1);
+
+        if (prChanging == 1) {
+            // РЕАЛИЗОВАТЬ ПОЗЖЕ: здесь выведем список учителей для выбора классного руководителя
+            // исходим из того, что конкретный преподаватель может быть классным руководителем только у одного класса
+            int existsKlassTeacher = 0; // признак, существования классного руководителя (чтоб не назначить одного преподавателя классным руководителем для нескольких классов одновременно)
+            for (int i = 0; i < klassArrayList.size() ; i++) {
+                System.out.println("Класс " + klassArrayList.get(i).nameKlass + " ");
+                System.out.println("Выберите классного руководителя из списка учителей для этого класса");
+
+                do {
+                    System.out.print("ВАШ ВЫБОР (номер из списка преподавателей):? ");
+                    numTeacher = scanner.nextInt();
+
+                    if (numTeacher < 0 || numTeacher > teacherArrayList.size()) {
+                        System.out.println("Вы ввели номер не из списка. Выберите номер преподавателя из списка!");
+                    } else {// выбранный номер преподавателя из списка
+                        // проверим, что он ранее не был уже выбран классным руководителем
+                        existsKlassTeacher = 0;
+                        for (int j = 0; j < i; j++) {
+                            if (teacherArrayList.get(numTeacher) == klassArrayList.get(j).classTeacher) {
+                                existsKlassTeacher = 1;
+                                System.out.println("Преподаватель " + klassArrayList.get(j).classTeacher.fam + " " + klassArrayList.get(j).classTeacher.name + " " + klassArrayList.get(j).classTeacher.ot + " уже выбран классным руководителем одного из классов");
+                                System.out.println("Выберите другого преподавателя");
+                                break;
+                            }
+                        }
+
+                    }
+                } while (numTeacher < 0 || numTeacher > teacherArrayList.size() || existsKlassTeacher == 1);
+
+                klassArrayList.get(i).classTeacher = teacherArrayList.get(numTeacher); // назначим классного руководителя для очередного класса!
+                System.out.print("Класс " + klassArrayList.get(i).nameKlass + " : ");
+                System.out.print("выбран(а)  " + klassArrayList.get(i).classTeacher.fam + " " + klassArrayList.get(i).classTeacher.name + " " + klassArrayList.get(i).classTeacher.ot);
+                System.out.println();
+                System.out.println();
+            }
+            System.out.println();
+            System.out.println("Для классов назначены следующие классные руководители:");
+            for (int i = 0; i < klassArrayList.size(); i++) {
+                System.out.print("Класс " + klassArrayList.get(i).nameKlass + " ");
+                System.out.print("Кл. руководитель: " + klassArrayList.get(i).classTeacher.fam + " " + klassArrayList.get(i).classTeacher.name + " " + klassArrayList.get(i).classTeacher.ot);
+                System.out.println();
+            }
+
+        } else {
+            System.out.println("Вы решили оставить существующих классных руководителей!");
+        }
+
+
+
+
+
+
         //**********************************************
         // посортируем учеников
         System.out.println();
@@ -193,7 +255,7 @@ public class SchoolMain {
             System.out.print(i + ") ");
             System.out.print(pupilArrayList.get(i).fam + " ");
             System.out.print(pupilArrayList.get(i).name + " ");
-            System.out.print(pupilArrayList.get(i).ot + " - ");
+            System.out.print(pupilArrayList.get(i).ot + "  ");
             lengthFIO = pupilArrayList.get(i).fam.length() + pupilArrayList.get(i).name.length() + pupilArrayList.get(i).ot.length();
             System.out.print(addSpaces(30 - lengthFIO)); // добавим несколько пробелов после фио для выравнивания столбцов
             System.out.print("Поведение: " + pupilArrayList.get(i).povedenie + ", ");
@@ -219,7 +281,7 @@ public class SchoolMain {
         do {
             System.out.println("Введите 0, 1, 2, 3 или 4:");
             kritSortOfPupil = scanner.nextInt();
-        } while (kritSortOfPupil != 1 & kritSortOfPupil != 2 & kritSortOfPupil != 3 & kritSortOfPupil != 4 & kritSortOfPupil != 0);
+        } while (kritSortOfPupil != 1 && kritSortOfPupil != 2 && kritSortOfPupil != 3 && kritSortOfPupil != 4 && kritSortOfPupil != 0);
 
         System.out.println("Вы выбрали критерий \"" + kritSortOfPupil + "\"!");
         System.out.print("Ученики будут распределены по классам ");
